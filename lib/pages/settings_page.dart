@@ -25,7 +25,7 @@ class _SettingsPageState extends State<SettingsPage> {
   final nameController = TextEditingController();
   final budgetController = TextEditingController();
   
-  final List<String> currencies = ['Rs.', r'$', '€', '£', '¥', 'PKR', 'INR'];
+  final List<String> currencies = ['Rs.', r'$', '€', '£', '¥', 'INR'];
   final List<String> themes = ['light', 'dark'];
   final List<String> languages = ['English', 'Urdu', 'Arabic', 'Hindi'];
 

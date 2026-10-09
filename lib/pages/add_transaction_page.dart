@@ -24,7 +24,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
   String? selectedCategory;
   bool isExpense = true;
 
-  final List<String> currencies = ['Rs.', r'$', '€', '£', '¥', 'PKR', 'INR'];
+  final List<String> currencies = ['Rs.', r'$', '€', '£', '¥', 'INR'];
   String? selectedCurrency;
 
   String get currentLang {
@@ -274,22 +274,118 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
               prefixIcon: const Icon(Icons.money, color: Color(0xFF38BDF8)),
               suffixIcon: IconButton(
                 icon: const Icon(Icons.calculate, color: Color(0xFF38BDF8)),
-                onPressed: () {
-                  try {
-                    String text = amountController.text.trim();
-                    if (text.isNotEmpty) {
-                      num val = text.interpret();
-                      amountController.text = val.toString();
-                    }
-                  } catch (e) {
-                    // Invalid expression
-                  }
-                },
+                onPressed: _showCalculatorDialog,
               ),
             ),
           ),
         ),
       ],
+    );
+  }
+
+  void _showCalculatorDialog() {
+    String expression = amountController.text;
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => StatefulBuilder(
+        builder: (context, setModalState) => Container(
+          height: MediaQuery.of(context).size.height * 0.7,
+          decoration: BoxDecoration(
+            color: Theme.of(context).scaffoldBackgroundColor,
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
+          ),
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            children: [
+              Container(
+                width: 50, height: 5,
+                margin: const EdgeInsets.only(bottom: 20),
+                decoration: BoxDecoration(color: Colors.grey[300], borderRadius: BorderRadius.circular(10)),
+              ),
+              Container(
+                alignment: Alignment.centerRight,
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).cardColor,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Text(
+                  expression.isEmpty ? "0" : expression,
+                  style: const TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: Color(0xFF38BDF8)),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              const SizedBox(height: 20),
+              Expanded(
+                child: GridView.count(
+                  crossAxisCount: 4,
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 10,
+                  children: [
+                    _calcBtn("C", Colors.redAccent, () => setModalState(() => expression = "")),
+                    _calcBtn("⌫", Colors.orange, () => setModalState(() { if(expression.isNotEmpty) expression = expression.substring(0, expression.length - 1); })),
+                    _calcBtn("/", const Color(0xFF38BDF8), () => setModalState(() => expression += "/")),
+                    _calcBtn("*", const Color(0xFF38BDF8), () => setModalState(() => expression += "*")),
+                    _calcBtn("7", Colors.grey, () => setModalState(() => expression += "7")),
+                    _calcBtn("8", Colors.grey, () => setModalState(() => expression += "8")),
+                    _calcBtn("9", Colors.grey, () => setModalState(() => expression += "9")),
+                    _calcBtn("-", const Color(0xFF38BDF8), () => setModalState(() => expression += "-")),
+                    _calcBtn("4", Colors.grey, () => setModalState(() => expression += "4")),
+                    _calcBtn("5", Colors.grey, () => setModalState(() => expression += "5")),
+                    _calcBtn("6", Colors.grey, () => setModalState(() => expression += "6")),
+                    _calcBtn("+", const Color(0xFF38BDF8), () => setModalState(() => expression += "+")),
+                    _calcBtn("1", Colors.grey, () => setModalState(() => expression += "1")),
+                    _calcBtn("2", Colors.grey, () => setModalState(() => expression += "2")),
+                    _calcBtn("3", Colors.grey, () => setModalState(() => expression += "3")),
+                    _calcBtn("=", Colors.green, () {
+                      try {
+                        num val = expression.interpret();
+                        setModalState(() => expression = val.toString());
+                      } catch (_) {}
+                    }),
+                    _calcBtn("0", Colors.grey, () => setModalState(() => expression += "0")),
+                    _calcBtn(".", Colors.grey, () => setModalState(() => expression += ".")),
+                    _calcBtn("OK", const Color(0xFF38BDF8), () {
+                      try {
+                        if(expression.isNotEmpty) {
+                           num val = expression.interpret();
+                           amountController.text = val.toString();
+                        }
+                      } catch (_) {
+                        amountController.text = expression;
+                      }
+                      Navigator.pop(context);
+                    }),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _calcBtn(String label, Color color, VoidCallback onTap) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(15),
+      child: Container(
+        decoration: BoxDecoration(
+          color: color.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(color: color.withOpacity(0.3)),
+        ),
+        child: Center(
+          child: Text(
+            label,
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: color == Colors.grey ? null : color),
+          ),
+        ),
+      ),
     );
   }
 
