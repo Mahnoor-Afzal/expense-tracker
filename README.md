@@ -1,40 +1,42 @@
-# Premium Wealth Manager 💎
+# Wealth Manager - Expense Tracker 💎
 
-A sophisticated, high-performance Flutter wealth management application designed with a premium "Half White & Sky Blue" aesthetic. This app empowers users to take full control of their financial life with advanced tracking, security, and portability features.
+A sophisticated, high-performance Flutter wealth management application designed with a premium "Half White & Sky Blue" aesthetic. This app empowers users to take full control of their financial life with advanced tracking, smart calculations, and portability features.
 
-## ✨ Premium Features
+## ✨ Key Features
 
-*   **Premium Design**: Modern Material 3 UI featuring a Sky Blue (0xFF38BDF8) and Half White (0xFFF1F5F9) palette.
-*   **Dynamic Budget Meter**: Real-time visual tracking of monthly spending against defined limits on the Home Page.
-*   **Biometric Security**: Protect your financial data with Fingerprint/FaceID authentication via `local_auth`.
-*   **Data Portability**: Full CSV Export and Import capabilities to keep your data under your control.
-*   **Multi-Currency Support**: Flexible currency settings to manage wealth globally.
-*   **Smart Analytics**: Categorized expense distribution and trend analysis.
-*   **Persistent Reminders**: Never miss a transaction with automated daily notifications.
-*   **Profile Management**: Personalized user experience with name and budget customization.
-*   **Theming**: Seamless switching between Light, Dark, and System modes.
+*   **Smart Calculator**: Built-in math expression evaluator in the amount field (e.g., `100+50*2`) for quick entries.
+*   **Premium Design**: Modern Material 3 UI featuring a refined Sky Blue and Half White palette, optimized for mobile viewing.
+*   **Debt & Loan Tracker**: Manage your debts and loans efficiently in a dedicated section.
+*   **Savings Goals**: Set and track your financial targets with progress visualization.
+*   **Dynamic Budget Meter**: Real-time visual tracking of monthly spending against defined limits.
+*   **Data Portability**: Full CSV Export and Import capabilities for seamless data management.
+*   **Multi-Currency Support**: Support for Rs., $, €, £, ¥, PKR, and INR.
+*   **Smart Analytics**: Categorized expense distribution and trend analysis via interactive charts.
+*   **Automated Reminders**: Persistent daily notifications to ensure you never miss a transaction.
+*   **Test Notification**: Verify notification settings directly from the app settings.
+*   **Theming**: Seamless switching between Light and Dark modes.
 
 ## 🛠 Tech Stack
 
 *   **Framework**: Flutter (Material 3)
-*   **Local Database**: Hive (NoSQL, high performance)
+*   **Local Database**: Hive (High-performance NoSQL)
+*   **Math Engine**: function_tree (For amount field calculations)
 *   **Charts**: FL Chart
-*   **Security**: local_auth (Biometrics)
-*   **Portability**: CSV parser & Share Plus
 *   **Notifications**: flutter_local_notifications & Timezone
+*   **Portability**: CSV parser & Share Plus
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 
-*   Flutter SDK (3.0.0 or higher)
-*   Android Studio / VS Code
+*   **Flutter SDK**: `^3.0.0`
+*   **Android**: minSdk 21 (with Core Library Desugaring)
 
 ### Installation
 
 1.  **Clone the repository**:
     ```bash
-    git clone https://github.com/your-username/wealth-manager.git
+    git clone https://github.com/Mahnoor-Afzal/expense-tracker.git
     ```
 2.  **Install dependencies**:
     ```bash
@@ -45,10 +47,20 @@ A sophisticated, high-performance Flutter wealth management application designed
     flutter run
     ```
 
-## 🔐 Biometric Setup (Android)
+### Release Build
 
-To enable biometric features, the app includes necessary permissions in `AndroidManifest.xml`. Ensure your device has biometrics registered in system settings.
+To generate a release APK with proper icon rendering:
+```bash
+flutter build apk --release --no-tree-shake-icons
+```
+
+## 🔐 Android Configuration
+
+The app is pre-configured with:
+*   ProGuard rules for Hive and Notification models.
+*   Java 8 Desugaring for broad device compatibility.
+*   Necessary permissions for Alarms and Notifications.
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License.
