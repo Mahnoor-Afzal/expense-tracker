@@ -1,0 +1,5 @@
+-keep class com.example.expense_tracker.models.** { *; }
+-keep class io.hive.** { *; }
+-dontwarn io.hive.**
+-keep class com.dexterous.flutterlocalnotifications.** { *; }
+-dontwarn com.dexterous.flutterlocalnotifications.**
