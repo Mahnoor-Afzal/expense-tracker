@@ -101,13 +101,11 @@ class _CategoriesPageState extends State<CategoriesPage> {
           appBar: AppBar(
             title: Text(TranslationService.t('manageCategories', lang)),
             elevation: 0,
-            actions: [
-              IconButton(
-                onPressed: addCategory,
-                icon: const Icon(Icons.add_box_rounded, size: 28),
-              ),
-              const SizedBox(width: 10),
-            ],
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: addCategory,
+            backgroundColor: const Color(0xFF38BDF8),
+            child: const Icon(Icons.add, color: Colors.white, size: 30),
           ),
           body: ValueListenableBuilder(
             valueListenable: Hive.box('categories').listenable(),
